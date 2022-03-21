@@ -21,7 +21,7 @@ class UsuarioService extends ApiService{
 
     // metodo POST para cadastrar um novo usuario
     salvar(usuario){
-        return this.post('/', usuario);
+        return this.post('', usuario);
     }
 
     validar(usuario){
