@@ -2,7 +2,7 @@ import axios from "axios";
 
 // indica a url raiz do servidor
 const httpClient = axios.create({
-    baseURL: 'http://localhost:8080'
+    baseURL: 'https://controlecontabil-api.herokuapp.com/'
 
 })
 
