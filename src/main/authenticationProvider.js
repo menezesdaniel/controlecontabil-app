@@ -1,6 +1,7 @@
 import React from 'react';
 
 import AuthService from '../app/service/authService';
+import jwt from 'jsonwebtoken';
 
 export const AuthContext = React.createContext();
 export const AuthConsumer = AuthContext.Consumer;
@@ -10,12 +11,19 @@ class AuthenticationProvider extends React.Component{
 
     state = {
         authUser: null,
-        isAuth: false
+        isAuth: false,
+        isLoading: true
     }
 
-    sessionStart = (usuario) => {
-        AuthService.login(usuario);
-        this.setState( { isAuth: true, authUser: usuario} );
+    sessionStart = (tokenDto) => {
+        const token = tokenDto.token;
+        const claims = jwt.decode(token);
+        const usuario = {
+            id: claims.userid,
+            nome: claims.nome
+        }        
+        AuthService.login(usuario, token);
+        this.setState( { isAuth: true, authUser: usuario } );
     }
 
     sessionEnd = () => {
@@ -23,7 +31,31 @@ class AuthenticationProvider extends React.Component{
         this.setState( { isAuth: false, authUser: null} );
     }
 
+    async componentDidMount(){
+        const isAuth = AuthService.isUserAuth()
+        if(isAuth){
+            const usuario = await AuthService.refreshSession();
+            this.setState({
+                isAuth: true,
+                authUser: usuario,
+                isLoading: false
+            })
+        }else{
+            this.setState( previousState => {
+                return{
+                    ...previousState,
+                    isLoading: false
+                }                
+            })
+        }
+    }
+
     render(){
+
+        if(this.state.isLoading){
+            return null;
+        }
+
         const context = {
             authUser: this.state.authUser,
             isAuth: this.state.isAuth,

@@ -49,7 +49,7 @@ class CadastroLancamentos extends React.Component {
         const usuarioLogado = LocalStorageService.obterItem('_usuario_logado')
                 
         const { descricao, valor, mes, ano, tipo } = this.state;
-        {/* operador destructuring para passar o valor das props do state*/}
+        // operador destructuring para passar o valor das props do state
         
         const lancamento = {
             // colocando conforme abaixo equivale a 'descricao: descricao'
@@ -82,7 +82,7 @@ class CadastroLancamentos extends React.Component {
 
     atualizar = () => {
 
-        {/* operador destructuring para passar o valor das props do state*/}
+        // operador destructuring para passar o valor das props do state
         const { descricao, valor, mes, ano, tipo, status, usuario, id } = this.state;        
         
         const lancamento = {

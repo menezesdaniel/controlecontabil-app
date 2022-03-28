@@ -1,9 +1,11 @@
 import axios from "axios";
 
+const baseURL = process.env.REACT_APP_API_URL;
+
 // indica a url raiz do servidor
 const httpClient = axios.create({
-    baseURL: 'https://controlecontabil-api.herokuapp.com/'
-
+    baseURL: baseURL,    
+    withCredentials: true,
 })
 
 class ApiService{
@@ -11,6 +13,12 @@ class ApiService{
     // construtor da classe
     constructor(apiurl){
         this.apiurl = apiurl;
+    }
+
+    static registrateToken(token){
+        if(token){
+            httpClient.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        }
     }
 
     // metodo POST

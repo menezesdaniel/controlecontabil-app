@@ -5,7 +5,6 @@ import FormGroup from '../components/form-group'
 import { withRouter } from 'react-router-dom'
 
 import UsuarioService from '../app/service/usuarioService'
-import LocalStorageService from '../app/service/localstorageService'
 import { mensagemErro } from '../components/toastr'
 import { AuthContext } from '../main/authenticationProvider'
 
@@ -42,7 +41,7 @@ class Login extends React.Component{
     render(){
         return(                              
             <div className="row">
-                <div className="col-md-6" style={ {position: 'relative', left: '300px'} }>
+                <div className="col-md-6 offset-md-3">
                     <div className="bs-docs-section">
                         <Card title="Login">
                             <div className="row">
