@@ -8,6 +8,8 @@ import LancamentosTable from './lancamentosTable'
 import LancamentoService from '../../app/service/lancamentoService'
 import LocalStorageService from '../../app/service/localstorageService'
 
+import ReactToPrint from 'react-to-print'
+
 import * as messages from '../../components/toastr'
 
 import { Dialog } from 'primereact/dialog'
@@ -122,6 +124,7 @@ class ConsultaLancamentos extends React.Component{
         );
 
         return(
+            
             <Card title="Consulta Lançamentos">
                 <div className="row">
                     <div className="col-md-6">
@@ -166,17 +169,28 @@ class ConsultaLancamentos extends React.Component{
                                 <i className="pi pi-plus"></i>Cadastrar
                             </button>
 
+                            <ReactToPrint
+                                trigger={ () => {
+                                    return <button type="button" className="btn btn-info">
+                                    <i className="pi pi-print"></i>Imprimir o resultado </button>
+                                }}
+                                content = { () => this.componentRef}
+                                documentTitle='Lancamento'
+                                pageStyle="print"
+                            />
                         </div>
                     </div>
                 </div>
                 <br />
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className="bs-component">
-                            <LancamentosTable lancamentos={this.state.lancamentos}                                
-                                deleteAction={this.abrirConfirmacao} 
-                                editAction={this.editar}
-                                alterarStatus={this.alterarStatus} />                            
+                <div ref={el => (this.componentRef=el)} >
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="bs-component">
+                                <LancamentosTable lancamentos={this.state.lancamentos}                                
+                                    deleteAction={this.abrirConfirmacao} 
+                                    editAction={this.editar}
+                                    alterarStatus={this.alterarStatus} />                            
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -187,7 +201,7 @@ class ConsultaLancamentos extends React.Component{
                     footer={confirmDialogFooter}
                     modal={ true }
                     onHide={() => this.setState({ showConfirmDialog: false })}>
-                     Confirma a exclusão deste lançamento?
+                    Confirma a exclusão deste lançamento?
                     </Dialog>
                 </div>
             </Card>
