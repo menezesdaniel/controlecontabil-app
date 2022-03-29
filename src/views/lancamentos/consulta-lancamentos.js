@@ -35,7 +35,9 @@ class ConsultaLancamentos extends React.Component{
     }
 
     buscar = () => {
-        if(!this.state.ano){
+        const vazio = this.state.ano.trim(' ');
+
+        if(!this.state.ano || !vazio){
             messages.mensagemErro('O preenchimento do campo Ano é obrigatório.');
             return false;
         }

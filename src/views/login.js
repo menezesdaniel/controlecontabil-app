@@ -22,6 +22,22 @@ class Login extends React.Component{
     }
 
     entrar = () => {
+        const erros = []
+        
+
+        if(!this.state.email){
+            erros.push('Digite o e-mail cadastrado!')
+        }
+
+        if(!this.state.senha){
+            erros.push('Digite a senha de acesso!');
+        }
+
+        if( erros && erros.length > 0 ){                     
+            erros.forEach( msg => mensagemErro(msg) );
+            return false;
+        }
+
         this.service.autenticar({
             email: this.state.email,
             senha: this.state.senha
